@@ -9,6 +9,8 @@ import java.util.Map;
 import java.io.File;
 import java.io.IOException;
 
+import cotose.Utils;
+
 /**
  *
  * @author Xavier
@@ -16,40 +18,40 @@ import java.io.IOException;
 public class MySQL {
 
     /**
-     * @author Pedro
-     * @param args - 
-     * @return  
-     * @throws Exception
+     * @author Xavier
+     * @return Returns 0 if the installation finished correctly. -1 If there was an error and debugging not enabled. Debugging info if debugging is enabled
+     * @throws Exception - If the OS is not recognized
      */
-    public static int install(String[] args) throws Exception{
-        ProcessBuilder pb = null;
+    public static int install() throws Exception{
         String os = System.getProperty("os.name");
+        Boolean debug_bool = false;
+        String debug = new String();
+        
         if (os.contains("Windows")) {
             if (System.getenv("ProgramFiles(x86)") != null){
-                pb = new ProcessBuilder("../scripts/mysql_win64.bat");
+                Utils.executeCommands("../scripts/mysql_win64.bat", debug_bool, debug, false);
             } else {
-                pb = new ProcessBuilder("../scripts/mysql_win32.bat");
+                Utils.executeCommands("../scripts/mysql_win32.bat", debug_bool, debug, false);
             }
         } else if (os.toLowerCase().contains("unix")){
             if (System.getProperty("os.arch").indexOf("64") != -1){
-                pb = new ProcessBuilder("../scripts/mysql_unix32.sh");
+                Utils.executeCommands("../scripts/mysql_unix32.sh", debug_bool, debug, false);
             } else {
-                pb = new ProcessBuilder("../scripts/mysql_unix64.sh");
+                Utils.executeCommands("../scripts/mysql_unix64.sh", debug_bool, debug, false);
             }
         } else if (os.toLowerCase().contains("mac")){
             if (System.getProperty("os.arch").indexOf("64") != -1){
-                pb = new ProcessBuilder("../scripts/mysql_mac32.sh");
+                Utils.executeCommands("../scripts/mysql_mac32.sh", debug_bool, debug, false);
             } else {
-                pb = new ProcessBuilder("../scripts/mysql_mac64.sh");
+                Utils.executeCommands("../scripts/mysql_mac64.sh", debug_bool, debug, false);
             }
-        } else throw new Exception("System not detected");
-        
-        //  formato pb: ProcessBuilder("myCommand", "myArg1", "myArg2");
-        if (pb != null){
-            Map<String, String> env = pb.environment(); // por si hay que guardar algun mensaje de error que de el script
-            Process p;
-            p = pb.start();
+        } else {
+            if (debug_bool){
+                throw new Exception(debug);
+            }
+            return -1;
         }
+        
         return 0;
     }
 }
