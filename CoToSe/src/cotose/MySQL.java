@@ -25,33 +25,34 @@ public class MySQL {
     public static int install() throws Exception{
         String os = System.getProperty("os.name");
         Boolean debug_bool = false;
-        String debug = new String();
+        String debug = "debuginfo.txt";
+        
+        ProcessBuilder pb;
         
         if (os.contains("Windows")) {
             if (System.getenv("ProgramFiles(x86)") != null){
-                Utils.executeCommands("../scripts/mysql_win64.bat", debug_bool, debug, false);
+                Utils.executeCommands("../scripts/mysql_win64.bat", debug_bool, debug, true);
             } else {
-                Utils.executeCommands("../scripts/mysql_win32.bat", debug_bool, debug, false);
-            }
-        } else if (os.toLowerCase().contains("unix")){
-            if (System.getProperty("os.arch").indexOf("64") != -1){
-                Utils.executeCommands("../scripts/mysql_unix32.sh", debug_bool, debug, false);
-            } else {
-                Utils.executeCommands("../scripts/mysql_unix64.sh", debug_bool, debug, false);
-            }
-        } else if (os.toLowerCase().contains("mac")){
-            if (System.getProperty("os.arch").indexOf("64") != -1){
-                Utils.executeCommands("../scripts/mysql_mac32.sh", debug_bool, debug, false);
-            } else {
-                Utils.executeCommands("../scripts/mysql_mac64.sh", debug_bool, debug, false);
+                Utils.executeCommands("../scripts/mysql_win32.bat", debug_bool, debug, true);
             }
         } else {
-            if (debug_bool){
-                throw new Exception(debug);
+            if (os.toLowerCase().contains("unix")){
+                pb = new ProcessBuilder("../scripts/mysql_unix.sh");
+            } else if (os.toLowerCase().contains("mac")){
+                pb = new ProcessBuilder("../scripts/mysql_mac.sh");
+            } else {
+                return -1; //Not found
             }
-            return -1;
+            
+            if (pb != null){
+                Map<String, String> env = pb.environment(); // por si hay que guardar algun mensaje de error que de el script
+                Process p;
+                p = pb.start();
+            }
         }
-        
+        if (debug_bool && debug != null){
+            throw new Exception(debug);
+        }
         return 0;
     }
 }
