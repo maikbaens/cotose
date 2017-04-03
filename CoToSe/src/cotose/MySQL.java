@@ -24,13 +24,25 @@ public class MySQL {
     public static int install(String[] args) throws Exception{
         ProcessBuilder pb = null;
         String os = System.getProperty("os.name");
-        if (os.toLowerCase().contains("windows")){
-            pb = new ProcessBuilder("../scripts/mysql_win.bat");
+        if (os.contains("Windows")) {
+            if (System.getenv("ProgramFiles(x86)") != null){
+                pb = new ProcessBuilder("../scripts/mysql_win64.bat");
+            } else {
+                pb = new ProcessBuilder("../scripts/mysql_win32.bat");
+            }
         } else if (os.toLowerCase().contains("unix")){
-            pb = new ProcessBuilder("../scripts/mysql_unix.sh");
+            if (System.getProperty("os.arch").indexOf("64") != -1){
+                pb = new ProcessBuilder("../scripts/mysql_unix32.sh");
+            } else {
+                pb = new ProcessBuilder("../scripts/mysql_unix64.sh");
+            }
         } else if (os.toLowerCase().contains("mac")){
-            pb = new ProcessBuilder("../scripts/mysql_mac.sh");
-        } else return -1;
+            if (System.getProperty("os.arch").indexOf("64") != -1){
+                pb = new ProcessBuilder("../scripts/mysql_mac32.sh");
+            } else {
+                pb = new ProcessBuilder("../scripts/mysql_mac64.sh");
+            }
+        } else throw new Exception("System not detected");
         
         //  formato pb: ProcessBuilder("myCommand", "myArg1", "myArg2");
         if (pb != null){
