@@ -17,12 +17,15 @@ import java.util.List;
 
 /**
  *
- * @author hzone
+ * @author Francisco
  */
 public class Utils {
-    /*
-        Cada linea del fichero como un string de la Lista devuelta
-    */
+
+    /**
+     * @desctiption Funcion que devuelve como lista de strings un fichero.
+     * @param filename  Nombre del fichero.
+     * @return Lista con cada linea del fichero como un string.
+     */
     public static List<String> readFile(String filename) {
         List<String> records = new ArrayList<String>();
         try {
@@ -40,12 +43,14 @@ public class Utils {
             return null;
         }
     }
-    /*
-        Funcion para escribir en fichero
-        filename: nombre del fichero
-        text: texto a escribir
-        append: si true se anade, si false se sobreescribe
-    */
+    
+    /**
+     * @description Funcion para escribir en fichero.
+     * @param filename Nombre del fichero.
+     * @param text Texto a escribir.
+     * @param append Si true se anade, si false se sobreescribe.
+     * @throws IOException 
+     */
     public static void writeFile(String filename, String text, Boolean append) throws IOException {
         File file = new File (filename);
         BufferedWriter out = new BufferedWriter(new FileWriter(file, append));
@@ -53,13 +58,15 @@ public class Utils {
         out.newLine();
         out.close();
     }
-    /*
-        Funcion para ejecutar linea por consola
-        command: linea a ejecutar
-        save: si se quiere guardar el log
-        filename: nombre del fichero al que guardar el log, si save es false, puede ser null
-        append: si se sobreescribe el fichero filename, si save es false, puede ser null
-    */
+    
+    /**
+     * @description Funcion para ejecutar una linea de comando.
+     * @param command Linea de comando a ejecutar.
+     * @param save Si True, se guarda el log, si False filename y append pueden ser null.
+     * @param filename Nombre del fichero al que guardar el log.
+     * @param append Si se sobreescribe el fichero filename.
+     * @throws IOException 
+     */
     public static void executeCommand(String command,Boolean save,String filename,Boolean append) throws IOException {
         writeFile(filename,"",append);
         try {
@@ -87,18 +94,23 @@ public class Utils {
             //e.printStackTrace();
         }
     }
-    /*
-        Funcion para ejecutar conjunto de lineas por consola desde fichero
-        commandfile: nombre del fichero a leer (relativo)
-        save: si se quiere guardar el log
-        filename: nombre del fichero al que guardar el log, si save es false, puede ser null
-        append: si se sobreescribe el fichero filename, si save es false, puede ser null
-    */
+
+    /**
+     * @description Funcion para ejecutar conjunto de lineas por consola desde fichero commandfile.
+     * @param commandfile Nombre del fichero a leer (relativo).
+     * @param save Si True, se guarda el log, si False filename y append pueden ser null.
+     * @param filename Nombre del fichero al que guardar el log.
+     * @param append Si se sobreescribe el fichero filename.
+     * @throws IOException 
+     */
     public static void executeCommands(String commandfile,Boolean save,String filename,Boolean append) throws IOException{
         List<String> filelines = readFile(commandfile);
         for(String comm : filelines){
             executeCommand(comm,save,filename,append);
         }
     }
-
+    
+    public static void genEntrance(){
+        
+    }
 }
