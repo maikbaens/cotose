@@ -18,11 +18,17 @@ import java.util.List;
 /**
  *
  * @author Francisco
+ * @version 1
  */
 public class Utils {
 
     /**
-     * @desctiption Funcion que devuelve como lista de strings un fichero.
+     * @description Objeto que referencia a la informacion del sistema (nombre, bits)
+     */
+    public static SOInfo sysinfo = new SOInfo();
+    
+    /**
+     * @descrtiption Funcion que devuelve como lista de strings un fichero.
      * @param filename  Nombre del fichero.
      * @return Lista con cada linea del fichero como un string.
      */
