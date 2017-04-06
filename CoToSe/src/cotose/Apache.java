@@ -15,9 +15,20 @@ import java.util.Map;
  */
 public class Apache {
 
-    /**
-     * @param args the command line arguments
-     */
+   
+    public static int installGlobalApache(int so, int bit) throws Exception{
+        if (so == 0) return apacheUnixLocal();
+        else if (so == 1) {
+            if (bit == 32) return apacheWindows32Local();
+            return apacheWindows64Local();
+        }
+        return 0;
+    } 
+    
+    public static int installGlobalApache(int so, int bit, String uName, String pWord) throws Exception{
+        if (so == 0) return apacheUnixRemoto(uName, pWord);
+        return 0;
+    } 
     
     public static int apacheUnixLocal() throws Exception {
         Boolean debug_bool = false;
