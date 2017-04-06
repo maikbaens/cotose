@@ -18,36 +18,35 @@ public class Apache {
     /**
      * @param args the command line arguments
      */
-     public static void main (String[] args)  throws Exception{  // main para poder pasarle parametros via args
-        String os = System.getProperty("os.name");
+    
+    public static int apacheUnixLocal() throws Exception {
         Boolean debug_bool = false;
         String debug = "debuginfo.txt";
-        
-        ProcessBuilder pb = null;
-        
-        if (os.contains("Windows")) {
-            if (System.getenv("ProgramFiles(x86)") != null){
-                Utils.executeCommands("../scripts/apache_win64.bat", debug_bool, debug, true);
-            } else {
-                Utils.executeCommands("../scripts/apache_win32.bat", debug_bool, debug, true);
-            }
-        } else {
-            if (os.toLowerCase().contains("unix")){
-                if (args[0] != null) pb = new ProcessBuilder("../scripts/apache_unix.sh", args[0]); //1 parametro, username para instal. remota
-                else pb = new ProcessBuilder("../scripts/apache_unix.sh"); 
-            } else if (os.toLowerCase().contains("mac")){
-                pb = new ProcessBuilder("../scripts/apache_mac.sh");
-            } else {
-            }
-            
-            if (pb != null){
-                Map<String, String> env = pb.environment(); // por si hay que guardar algun mensaje de error que de el script
-                Process p;
-                p = pb.start();
-            }
-        }
-        if (debug_bool && debug != null){
-            throw new Exception(debug);
-        }
+        Utils.executeCommands("../scripts/apache_unix.sh", debug_bool, debug, true);
+        return 0;
     }
+     
+    public static int apacheUnixRemoto(String uName, String pWord) throws Exception {
+        Boolean debug_bool = false;
+        String debug = "debuginfo.txt";
+        ProcessBuilder pb = null;
+        pb = new ProcessBuilder("../scripts/apache_unix.sh", uName, pWord);
+        Process p;
+        p = pb.start();
+        return 0;
+    }
+     
+    public static int apacheWindows64Local() throws Exception {
+        Boolean debug_bool = false;
+        String debug = "debuginfo.txt";
+        Utils.executeCommands("../scripts/apache_win64.bat", debug_bool, debug, true);
+        return 0;
+    }  
+     
+    public static int apacheWindows32Local() throws Exception {
+        Boolean debug_bool = false;
+        String debug = "debuginfo.txt";
+        Utils.executeCommands("../scripts/apache_win32.bat", debug_bool, debug, true);
+        return 0;
+    }      
 }
