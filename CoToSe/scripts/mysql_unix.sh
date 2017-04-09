@@ -6,7 +6,7 @@ if [[ 'Ubuntu' == *distroutput* ]]; then
 fi
 
 #Install package
-sudo ${GET} mysql-server
+sudo ${GET} mysql-server -y
 if [ $? != 0 ]; then
     echo "Something went wrong with the installation"
     exit
