@@ -30,8 +30,7 @@ public class MySQL {
                 return installUnix();
             case 1:
                 //Win
-                if (bits == 32) return installWin32();
-                else return installWin64();
+                return installWin();
             case 2:
                 //Mac
                 return installMac();
@@ -40,23 +39,10 @@ public class MySQL {
         }
     }
     
-    private static int installWin32() throws Exception{
+    private static int installWin() throws Exception{
         Boolean debug_bool = false;
         String debug = "debuginfo.txt";
-        Utils.executeCommands("../scripts/mysql_win32.bat", debug_bool, debug, true);
-        
-        if (debug_bool){
-            if (Utils.readFile(debug) != null){
-                throw new Exception();
-            }
-        }
-        return 0;
-    }
-    
-    private static int installWin64() throws Exception{
-        Boolean debug_bool = false;
-        String debug = "debuginfo.txt";
-        Utils.executeCommands("../scripts/mysql_win64.bat", debug_bool, debug, true);
+        Utils.executeCommands("../scripts/mysql_win.bat", debug_bool, debug, true);
         
         if (debug_bool){
             if (Utils.readFile(debug) != null){
