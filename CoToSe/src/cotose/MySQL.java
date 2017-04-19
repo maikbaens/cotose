@@ -7,6 +7,8 @@ package cotose;
 
 import java.util.Map;
 import java.io.File;
+import java.nio.file.Paths;
+
 
 import java.lang.ProcessBuilder.Redirect;
 
@@ -42,7 +44,7 @@ public class MySQL {
     private static int installWin() throws Exception{
         Boolean debug_bool = false;
         String debug = "debuginfo.txt";
-        Utils.executeCommands("../scripts/mysql_win.bat", debug_bool, debug, true);
+        Utils.executeCommands("../scripts/mysql_win.bat " + Paths.get(".").toAbsolutePath().normalize().toString(), debug_bool, debug, true);
         
         if (debug_bool){
             if (Utils.readFile(debug) != null){
