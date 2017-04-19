@@ -1,0 +1,4 @@
+<html>
+Web page SQL DataBase manager. <br>
+More <a href="www.phpmyadmin.net"> info</a>.<br>
+<html>

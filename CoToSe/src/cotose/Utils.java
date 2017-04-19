@@ -50,6 +50,23 @@ public class Utils {
         }
     }
     
+    public static String readFileAsLine(String filename) {
+        String records = "";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            String line;
+            while ((line = reader.readLine()) != null) {
+              records += line;
+            }
+            reader.close();
+            return records;
+        }
+        catch (Exception e) {
+            System.err.format("Exception occurred trying to read '%s'.", filename);
+            e.printStackTrace();
+            return null;
+        }
+    }
     /**
      * @description Funcion para escribir en fichero.
      * @param filename Nombre del fichero.
@@ -116,7 +133,4 @@ public class Utils {
         }
     }
     
-    public static void genEntrance(){
-        
-    }
 }

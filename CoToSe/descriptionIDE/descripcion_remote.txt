@@ -1,0 +1,3 @@
+<html>
+Configure the services in a remote machine.
+</html>
