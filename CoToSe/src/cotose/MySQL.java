@@ -25,7 +25,7 @@ public class MySQL {
      * @param so - Defines the OS we are working with
      * @param bits - Defines the bits (32 or 64) of the OS
      */
-    public static int install(int so, int bits) throws Exception{
+    public static int install(int so, boolean bits) throws Exception{
         switch (so) {
             case 0:
                 //Unix
